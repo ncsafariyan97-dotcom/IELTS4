@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Speaking — Technology</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: #eef2f7;
+  color: #172033;
+  overflow: hidden;
+}
+
+.presentation {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.slide {
+  display: none;
+  width: 100%;
+  height: 100%;
+  padding: 55px 7vw 90px;
+  overflow-y: auto;
+  animation: fade .35s ease;
+}
+
+.slide.active {
+  display: block;
+}
+
+@keyframes fade {
+  from { opacity: .2; transform: translateX(15px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.badge {
+  display: inline-block;
+  padding: 7px 15px;
+  border-radius: 30px;
+  background: #dce8ff;
+  color: #244b91;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: clamp(42px, 6vw, 82px);
+  margin: 20px 0 15px;
+  line-height: .95;
+  color: #142b52;
+}
+
+h2 {
+  font-size: clamp(30px, 4vw, 52px);
+  margin: 15px 0 28px;
+  color: #142b52;
+}
+
+h3 {
+  color: #244b91;
+  margin-bottom: 10px;
+}
+
+p, li {
+  font-size: clamp(16px, 1.45vw, 21px);
+  line-height: 1.55;
+}
+
+.subtitle {
+  max-width: 900px;
+  font-size: clamp(19px, 2vw, 27px);
+  color: #526174;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+.grid.three {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.card {
+  background: rgba(255,255,255,.92);
+  border: 1px solid #dce2eb;
+  border-radius: 18px;
+  padding: 23px;
+  box-shadow: 0 8px 24px rgba(26,45,78,.07);
+}
+
+.card strong {
+  color: #1d4d98;
+}
+
+.quote {
+  background: #172d52;
+  color: white;
+  padding: 23px 27px;
+  border-radius: 16px;
+  margin: 20px 0;
+  font-size: clamp(17px, 1.7vw, 24px);
+  line-height: 1.5;
+}
+
+.quote span {
+  color: #c9dcff;
+  font-size: .75em;
+}
+
+.example {
+  background: #f3f7fd;
+  border-left: 5px solid #4774bd;
+  padding: 15px 20px;
+  margin-top: 12px;
+  border-radius: 0 12px 12px 0;
+}
+
+.columns {
+  columns: 2;
+  column-gap: 40px;
+}
+
+.item {
+  margin: 12px 0;
+  break-inside: avoid;
+}
+
+.tag {
+  display: inline-block;
+  background: #e8eef8;
+  color: #244b91;
+  border-radius: 8px;
+  padding: 4px 9px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-right: 5px;
+}
+
+.answer {
+  display: none;
+  margin-top: 18px;
+  padding: 18px;
+  background: #eaf7f0;
+  border: 1px solid #b9dfca;
+  border-radius: 14px;
+}
+
+.answer.show {
+  display: block;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+.reveal {
+  padding: 11px 17px;
+  border-radius: 10px;
+  background: #244b91;
+  color: white;
+  margin-top: 15px;
+  font-weight: 700;
+}
+
+.reveal:hover {
+  background: #17396f;
+}
+
+.activity {
+  background: white;
+  border-radius: 22px;
+  padding: 28px;
+  border: 2px solid #d9e2f1;
+  box-shadow: 0 10px 30px rgba(30,50,90,.08);
+}
+
+.challenge {
+  background: #fff8e8;
+  border-left: 5px solid #d39b32;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+.correct {
+  color: #20734a;
+  font-weight: 700;
+}
+
+.wrong {
+  color: #a33b3b;
+  text-decoration: line-through;
+}
+
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 5px;
+  background: #4774bd;
+  width: 0%;
+  z-index: 50;
+  transition: width .3s ease;
+}
+
+.controls {
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  z-index: 40;
+}
+
+.nav {
+  background: #172d52;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  min-width: 90px;
+}
+
+.nav:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+}
+
+.counter {
+  background: white;
+  padding: 10px 15px;
+  border-radius: 10px;
+  color: #4b5a70;
+  box-shadow: 0 3px 12px rgba(0,0,0,.08);
+}
+
+.cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100%;
+}
+
+.cover-line {
+  width: 100px;
+  height: 6px;
+  background: #4774bd;
+  border-radius: 10px;
+  margin: 15px 0 25px;
+}
+
+.small {
+  font-size: .85em;
+  color: #66758a;
+}
+
+.two-col-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 35px;
+}
+
+.checklist div {
+  margin: 12px 0;
+  padding: 10px 14px;
+  background: #f6f8fb;
+  border-radius: 10px;
+}
+
+@media (max-width: 800px) {
+  .slide {
+    padding: 35px 25px 90px;
+  }
+
+  .grid,
+  .grid.three,
+  .two-col-list {
+    grid-template-columns: 1fr;
+  }
+
+  .columns {
+    columns: 1;
+  }
+
+  h1 {
+    font-size: 52px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="presentation">
+<div class="progress" id="progress"></div>
+
+<!-- SLIDE 1 -->
+<section class="slide active">
+  <div class="cover">
+    <span class="badge">IELTS Speaking</span>
+    <h1>Technology</h1>
+    <div class="cover-line"></div>
+
+    <p class="subtitle">
+      How technology has changed our lives and the way we communicate,
+      work, study, and entertain ourselves.
+    </p>
+
+    <div class="grid" style="margin-top:35px;">
+      <div class="card">
+        <h3>IELTS Speaking Focus</h3>
+        <p>• Personal experiences with technology</p>
+        <p>• Advantages and disadvantages</p>
+        <p>• Technology in education and work</p>
+        <p>• AI and future developments</p>
+        <p>• Social media and digital communication</p>
+      </div>
+
+      <div class="card">
+        <h3>Band 8+ Tip</h3>
+        <p>Don't just say:</p>
+        <div class="example">Technology is useful.</div>
+        <p>Instead:</p>
+        <div class="quote">
+          Technology has revolutionized the way we communicate,
+          access information, and carry out everyday tasks.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 2 -->
+<section class="slide">
+  <span class="badge">Vocabulary • Idioms • Phrases</span>
+  <h2>Language Bank</h2>
+
+  <div class="grid three">
+
+    <div class="card">
+      <h3>Vocabulary</h3>
+      <div class="item"><strong>Artificial Intelligence</strong><br><span class="small">AI-powered systems that perform human-like tasks.</span></div>
+      <div class="item"><strong>Automation</strong><br><span class="small">Using technology to perform tasks automatically.</span></div>
+      <div class="item"><strong>Innovation</strong><br><span class="small">A new idea, method, or technology.</span></div>
+      <div class="item"><strong>Digital literacy</strong><br><span class="small">The ability to use digital technology effectively.</span></div>
+      <div class="item"><strong>Cybersecurity</strong><br><span class="small">Protection of digital systems and information.</span></div>
+      <div class="item"><strong>Cutting-edge technology</strong><br><span class="small">The most advanced technology available.</span></div>
+      <div class="item"><strong>Technological advancement</strong></div>
+      <div class="item"><strong>Virtual communication</strong></div>
+      <div class="item"><strong>Data privacy</strong></div>
+      <div class="item"><strong>User-friendly</strong></div>
+      <div class="item"><strong>Productivity</strong></div>
+      <div class="item"><strong>Digital transformation</strong></div>
+    </div>
+
+    <div class="card">
+      <h3>Idioms</h3>
+
+      <div class="item">
+        <strong>At the click of a button</strong>
+        <p class="small">Very easily and instantly.</p>
+      </div>
+
+      <div class="item">
+        <strong>Keep up with technology</strong>
+        <p class="small">Stay informed about new developments.</p>
+      </div>
+
+      <div class="item">
+        <strong>A double-edged sword</strong>
+        <p class="small">Something with both advantages and disadvantages.</p>
+      </div>
+
+      <div class="item">
+        <strong>On the same wavelength</strong>
+        <p class="small">Thinking in a similar way.</p>
+      </div>
+
+      <div class="item">
+        <strong>Light years ahead</strong>
+        <p class="small">Far more advanced than others.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Useful IELTS Phrases</h3>
+
+      <div class="item">
+        <strong>There's no denying that...</strong>
+        <p class="small">Technology plays a crucial role in modern life.</p>
+      </div>
+
+      <div class="item">
+        <strong>What stands out to me is...</strong>
+        <p class="small">how technology has made communication faster.</p>
+      </div>
+
+      <div class="item">
+        <strong>From my perspective...</strong>
+        <p class="small">technological advancement has improved our quality of life.</p>
+      </div>
+
+      <div class="item">
+        <strong>To a certain extent...</strong>
+        <p class="small">people have become overly dependent on technology.</p>
+      </div>
+
+      <div class="item">
+        <strong>One of the main reasons is that...</strong>
+        <p class="small">technology saves time and increases productivity.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SLIDE 3 -->
+<section class="slide">
+  <span class="badge">Grammar Range</span>
+  <h2>Sound More Like a Band 8+ Speaker</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>1. Present Perfect</h3>
+      <div class="example">Technology <strong>has changed</strong> the way we communicate.</div>
+    </div>
+
+    <div class="card">
+      <h3>2. Passive Voice</h3>
+      <div class="example">People <strong>are constantly exposed</strong> to digital content.</div>
+    </div>
+
+    <div class="card">
+      <h3>3. Relative Clauses</h3>
+      <div class="example">I use several apps <strong>that help me stay organized.</strong></div>
+    </div>
+
+    <div class="card">
+      <h3>4. Conditionals</h3>
+      <div class="example">
+        <strong>If</strong> technology continues to develop at this pace,
+        many jobs will become automated.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>5. Comparatives</h3>
+      <div class="example">
+        Online communication is <strong>far more convenient than</strong>
+        traditional communication.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>6. Concession</h3>
+      <div class="example">
+        <strong>Although</strong> technology has made our lives easier,
+        it has also created new problems.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="quote" style="margin-top:25px;">
+    Range + Accuracy + Naturalness = Better Grammar Score
+  </div>
+</section>
+
+<!-- SLIDE 4 -->
+<section class="slide">
+  <span class="badge">Speaking Activity</span>
+  <h2>Talk About Technology</h2>
+
+  <div class="activity">
+    <h3>Pair Discussion</h3>
+
+    <div class="two-col-list">
+      <div class="card">1. How has technology changed your daily life?</div>
+      <div class="card">2. Do people rely too much on technology nowadays?</div>
+      <div class="card">3. What are the advantages and disadvantages of AI?</div>
+      <div class="card">4. Should children spend less time using digital devices?</div>
+      <div class="card">5. Which technological advancement will have the biggest future impact?</div>
+    </div>
+
+    <div class="challenge">
+      <h3>Student Challenge</h3>
+      <p>Your answer must include:</p>
+      <p>✓ 3 vocabulary items &nbsp; ✓ 1 idiom &nbsp; ✓ 1 IELTS phrase &nbsp; ✓ 1 complex sentence</p>
+      <strong>Speaking time: 60–90 seconds</strong>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5 -->
+<section class="slide">
+  <span class="badge">Band 8+ Challenge</span>
+  <h2>60-Second Challenge</h2>
+
+  <div class="activity">
+    <h3>Speak for one minute about:</h3>
+
+    <div class="quote">
+      A piece of technology you use every day
+    </div>
+
+    <h3>Try to include:</h3>
+
+    <div class="checklist">
+      <div>✓ Artificial intelligence / innovation / productivity</div>
+      <div>✓ A double-edged sword</div>
+      <div>✓ There's no denying that...</div>
+      <div>✓ One complex sentence using <strong>although</strong></div>
+    </div>
+
+    <button class="reveal" onclick="toggleAnswer('answer5')">
+      Show Model Answer
+    </button>
+
+    <div class="answer" id="answer5">
+      <strong>Model:</strong><br><br>
+      There's no denying that my smartphone is an essential part of my daily life.
+      Although it helps me stay productive and connected, it can sometimes be
+      a double-edged sword because it distracts me from other important tasks.
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 6 -->
+<section class="slide">
+  <span class="badge">Interactive Activity</span>
+  <h2>Match the Idiom</h2>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Idioms</h3>
+      <p>1. At the click of a button</p>
+      <p>2. A double-edged sword</p>
+      <p>3. Light years ahead</p>
+      <p>4. On the same wavelength</p>
+    </div>
+
+    <div class="card">
+      <h3>Meanings</h3>
+      <p>A. Very advanced</p>
+      <p>B. Easy and instant</p>
+      <p>C. Having both benefits and drawbacks</p>
+      <p>D. Thinking similarly</p>
+    </div>
+  </div>
+
+  <button class="reveal" onclick="toggleAnswer('answer6')">
+    Reveal Answers
+  </button>
+
+  <div class="answer" id="answer6">
+    <strong>1 → B &nbsp;&nbsp; 2 → C &nbsp;&nbsp; 3 → A &nbsp;&nbsp; 4 → D</strong>
+    <br><br>
+    <strong>Follow-up:</strong> Create one original IELTS sentence using any two idioms.
+  </div>
+</section>
+
+<!-- SLIDE 7 -->
+<section class="slide">
+  <span class="badge">Answer Development</span>
+  <h2>Don't Give Short Answers</h2>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Weak Answer</h3>
+      <div class="example">
+        Yes, I use technology a lot. It's useful.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Better Answer</h3>
+      <div class="example">
+        Yes, I use technology quite extensively because it makes my daily
+        routine more efficient. For example, I rely on several apps to
+        organize my work and communicate with colleagues. As a result,
+        I can save a considerable amount of time.
+      </div>
+    </div>
+  </div>
+
+  <div class="quote">
+    WHAT → WHY → EXAMPLE → RESULT
+  </div>
+
+  <p>
+    <strong>IELTS Tip:</strong> Don't stop after giving your opinion.
+    Develop your answer with a reason, an example, and a result.
+  </p>
+</section>
+
+<!-- SLIDE 8 -->
+<section class="slide">
+  <span class="badge">Common Mistakes</span>
+  <h2>Common IELTS Mistakes with "Technology"</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>1. Technology vs. Technologies</h3>
+      <p class="wrong">I love technologies.</p>
+      <p class="correct">✓ I love technology.</p>
+      <p class="correct">✓ I love modern technologies.</p>
+      <p class="small">
+        Use <strong>technology</strong> for technology in general.
+        Use <strong>technologies</strong> for different types or systems.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>2. Technology vs. Technique</h3>
+      <p class="wrong">Learning technology is important for speaking English.</p>
+      <p class="correct">✓ Learning new techniques is important for speaking English.</p>
+      <p class="small">
+        Technology = tools, machines, systems<br>
+        Technique = a method or skill
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>3. Repetition</h3>
+      <p class="wrong">
+        Technology is important because technology helps people and technology improves life.
+      </p>
+      <p class="correct">
+        ✓ Technology is important because it helps people and improves their quality of life.
+      </p>
+      <p class="small">
+        Try: innovation • digital tools • technological advancement • modern devices
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- SLIDE 9 -->
+<section class="slide">
+  <span class="badge">Common Mistakes</span>
+  <h2>More Mistakes to Avoid</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>4. Incorrect Preposition</h3>
+      <p class="wrong">Depend to technology</p>
+      <p class="wrong">Depend of technology</p>
+      <p class="correct">✓ Depend on technology</p>
+    </div>
+
+    <div class="card">
+      <h3>5. Wrong Adjective Form</h3>
+      <p class="wrong">Technology development</p>
+      <p class="correct">✓ Technological development</p>
+      <p class="correct">✓ Technological advancement</p>
+    </div>
+
+    <div class="card">
+      <h3>6. Only "Good" or "Bad"</h3>
+      <p class="wrong">Technology is good.</p>
+      <p class="correct">✓ Technology is highly beneficial.</p>
+      <p class="correct">✓ Technology is a double-edged sword.</p>
+      <p class="correct">✓ Technology has transformed the way we live and work.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- SLIDE 10 -->
+<section class="slide">
+  <span class="badge">Band 8+ Language</span>
+  <h2>Upgrade Your IELTS Language</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>Basic</h3>
+      <div class="example">Technology is important.</div>
+    </div>
+
+    <div class="card">
+      <h3>Band 7+</h3>
+      <div class="example">
+        Technology plays an important role in modern life.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Band 8+</h3>
+      <div class="example">
+        Technology has revolutionized nearly every aspect of modern life.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Another Band 8+</h3>
+      <div class="example">
+        There's no denying that technological advancement has improved
+        efficiency and connectivity.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="quote">
+    Although technology offers countless benefits,
+    excessive reliance on it may create new challenges.
+  </div>
+
+  <p>
+    <strong>Remember:</strong> Don't replace every simple word with a difficult word.
+    Upgrade your language when it sounds natural.
+  </p>
+</section>
+
+<!-- SLIDE 11 -->
+<section class="slide">
+  <span class="badge">Error Correction</span>
+  <h2>Fix the IELTS Answer</h2>
+
+  <div class="activity">
+    <h3>Find the mistakes:</h3>
+
+    <div class="example">
+      Technology is very good because technology helps people and technology
+      is important. People depend to technology and there are many technology
+      development nowadays.
+    </div>
+
+    <button class="reveal" onclick="toggleAnswer('answer11')">
+      Reveal Improved Version
+    </button>
+
+    <div class="answer" id="answer11">
+      <strong>Improved version:</strong><br><br>
+      There's no denying that technology plays a crucial role in modern life.
+      It helps people save time and improve their productivity. However,
+      many people have become overly dependent on technology, and technological
+      development is happening at an unprecedented pace.
+      <br><br>
+      <strong>What changed?</strong>
+      <br>
+      Repetition • Word choice • Preposition • Word form • Grammar •
+      Sentence structure • Cohesion
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 12 -->
+<section class="slide">
+  <span class="badge">Final Speaking Task</span>
+  <h2>IELTS Speaking: Final Challenge</h2>
+
+  <div class="quote">
+    Do you think technology has made people's lives better?
+  </div>
+
+  <h3>Your answer must include:</h3>
+
+  <div class="checklist">
+    <div>☑ 2 advanced vocabulary items</div>
+    <div>☑ 1 idiom</div>
+    <div>☑ 1 useful IELTS phrase</div>
+    <div>☑ 1 complex sentence</div>
+    <div>☑ 1 example</div>
+    <div>☑ 1 contrast / concession</div>
+  </div>
+
+  <div class="challenge">
+    <strong>Suggested structure:</strong><br><br>
+    Opinion → Reason → Example → Contrast → Conclusion
+  </div>
+</section>
+
+<!-- SLIDE 13 -->
+<section class="slide">
+  <span class="badge">IELTS Tips</span>
+  <h2>Technology: Band 7–9 Tips</h2>
+
+  <div class="grid">
+    <div class="card"><strong>1. Don't memorize full answers.</strong><br>Memorize useful language, not complete responses.</div>
+    <div class="card"><strong>2. Develop your ideas.</strong><br>Don't stop after giving your opinion.</div>
+    <div class="card"><strong>3. Use vocabulary naturally.</strong><br>One well-used advanced word is better than five forced words.</div>
+    <div class="card"><strong>4. Show grammatical range.</strong><br>Mix simple and complex structures.</div>
+    <div class="card"><strong>5. Give examples.</strong><br>Examples make your ideas clearer and more convincing.</div>
+    <div class="card"><strong>6. Avoid repetition.</strong><br>Use pronouns, synonyms, and paraphrasing.</div>
+    <div class="card"><strong>7. Don't force idioms.</strong><br>Use them only when they fit naturally.</div>
+    <div class="card"><strong>8. Answer directly.</strong><br>Especially in Part 3, make your position clear.</div>
+  </div>
+</section>
+
+<!-- SLIDE 14 -->
+<section class="slide">
+  <div class="cover">
+    <span class="badge">Exit Ticket</span>
+    <h2>Before You Leave...</h2>
+
+    <div class="grid">
+      <div class="card">
+        <h3>1</h3>
+        <p>One new word I learned today is...</p>
+      </div>
+
+      <div class="card">
+        <h3>2</h3>
+        <p>One expression I can use in IELTS is...</p>
+      </div>
+
+      <div class="card">
+        <h3>3</h3>
+        <p>One grammar structure I will try to use is...</p>
+      </div>
+    </div>
+
+    <div class="quote" style="margin-top:35px;">
+      <span>FINAL CHALLENGE</span><br><br>
+      Is technology a blessing or a curse?
+    </div>
+
+    <p>
+      Use at least:
+      <strong>1 vocabulary item + 1 idiom + 1 complex sentence</strong>
+    </p>
+
+    <h2 style="margin-top:35px;">
+      Think Clearly. Speak Naturally. Score Higher.
+    </h2>
+  </div>
+</section>
+
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <button class="nav" id="prev" onclick="changeSlide(-1)">← Back</button>
+  <div class="counter" id="counter">1 / 14</div>
+  <button class="nav" id="next" onclick="changeSlide(1)">Next →</button>
+</div>
+
+<script>
+let current = 0;
+const slides = document.querySelectorAll('.slide');
+const progress = document.getElementById('progress');
+const counter = document.getElementById('counter');
+const prev = document.getElementById('prev');
+const next = document.getElementById('next');
+
+function updateSlide() {
+  slides.forEach((slide, i) => {
+    slide.classList.toggle('active', i === current);
+  });
+
+  counter.textContent = `${current + 1} / ${slides.length}`;
+  progress.style.width = `${((current + 1) / slides.length) * 100}%`;
+
+  prev.disabled = current === 0;
+  next.disabled = current === slides.length - 1;
+}
+
+function changeSlide(direction) {
+  const nextIndex = current + direction;
+
+  if (nextIndex >= 0 && nextIndex < slides.length) {
+    current = nextIndex;
+    updateSlide();
+  }
+}
+
+function toggleAnswer(id) {
+  document.getElementById(id).classList.toggle('show');
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === ' ') {
+    e.preventDefault();
+    changeSlide(1);
+  }
+
+  if (e.key === 'ArrowLeft') {
+    e.preventDefault();
+    changeSlide(-1);
+  }
+});
+
+updateSlide();
+</script>
+
+</body>
+</html>
+
+
